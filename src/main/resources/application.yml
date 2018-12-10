@@ -5,6 +5,8 @@ server:
   port: 2080
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://blogmanager:123456@localhost:10237/eureka
+      defaultZone: http://blogmanager:123456@master:10237/eureka/
