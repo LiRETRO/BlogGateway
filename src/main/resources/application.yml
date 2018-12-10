@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: BlogGateway
+server:
+  port: 2080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://blogmanager:123456@localhost:10237/eureka
