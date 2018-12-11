@@ -49,7 +49,7 @@ hystrix:
           thread:
             timeoutInMillisecond: 3000
 server:
-  port: 2080
+  port: 9000
 
 eureka:
   instance:
