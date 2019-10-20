@@ -47,7 +47,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMillisecond: 3000
+            timeoutInMilliseconds: 3000
 server:
   port: 9999
 
