@@ -34,10 +34,10 @@ spring:
           args:
             # 重试次数(不包含本次)
             retries: 3
-            # 重试CODE  默认无
-            statuses: 404
-            # 重试CODE  系列,
-            series: 500
+#            # 重试CODE  默认无
+#            statuses: 404
+#            # 重试CODE  系列,
+#            series: 500
             # 重试请求 默认GET
             methods:
               - GET
