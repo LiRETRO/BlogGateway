@@ -40,6 +40,10 @@ spring:
             statusSeries: 500
             # 重试请求 默认GET
             method: GET
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
 # 配置hystrix防护机制
 hystrix:
   command:
@@ -47,7 +51,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 3000
+            timeoutInMilliseconds: 10000
 server:
   port: 9999
 
