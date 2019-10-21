@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @ClassName FallbackController
  * @Description TODO
@@ -28,7 +26,7 @@ public class FallbackController {
     public ErrorInfo fallback() {
         ErrorInfo errorInfo = new ErrorInfo();
         errorInfo.setCode(HttpStatus.NOT_ACCEPTABLE.value());
-        errorInfo.setMessage("请求失败，服务降级！");
+        errorInfo.setMessage("请求失败，服务暂时不可用！");
         return errorInfo;
     }
 }
