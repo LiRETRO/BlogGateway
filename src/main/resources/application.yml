@@ -35,11 +35,16 @@ spring:
             # 重试次数(不包含本次)
             retries: 3
             # 重试CODE  默认无
-            status: 404
+            statuses: 404
             # 重试CODE  系列,
-            statusSeries: 500
+            series: 500
             # 重试请求 默认GET
-            method: GET
+            methods:
+              - GET
+              - POST
+            # 指定异常重试
+            exceptions:
+              - java.lang.Exception
         - name: Hystrix
           args:
             name: fallbackcmd
