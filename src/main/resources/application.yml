@@ -51,6 +51,10 @@ spring:
             fallbackUri: forward:/fallback
   # Zipkin配置
   zipkin:
+    # 打开服务发现
+    locator:
+      discovery:
+        enabled: true
     base-url: http://localhost:9411/
   # sleuth配置
   sleuth:
