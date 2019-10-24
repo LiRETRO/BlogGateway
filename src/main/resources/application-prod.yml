@@ -1,0 +1,90 @@
+spring:
+  application:
+    name: BlogGateway
+  # Spring Cloud网关配置
+  cloud:
+    gateway:
+      # 启用基于服务发现的路由定位
+      discovery:
+        locator:
+          enabled: true
+          # 服务名小写
+          lower-case-service-id: true
+      # 路由绑定
+      default-filters:
+      routes:
+        # ID
+      - id: blog-server
+        # 地址 lb为负载均衡Filter blog-server为服务中心注册的服务名称
+        # 假设为websocket路由只需要加上ws 如:  lb:ws://<registed name>
+        uri: lb://blog-server
+        predicates:
+          # 访问路由路径
+        - Path=/blogserver/**
+          # 权重
+#        - Weight=blog-server, 90
+        filters:
+        - StripPrefix=1
+#        - RewritePath=/blogrouter/(?<segment>.*), /$\{segment}
+#        - name: blog-server
+#          args:
+#            name: fallbackcmd
+#            fallbackUrl: forward:/fallback
+        - name: Retry
+          args:
+            # 重试次数(不包含本次)
+            retries: 3
+#            # 重试CODE  默认无
+#            statuses: 404
+#            # 重试CODE  系列,
+#            series: 500
+            # 重试请求 默认GET
+            methods:
+              - GET
+              - POST
+            # 指定异常重试
+            exceptions:
+              - java.lang.Exception
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+  # Zipkin配置
+  zipkin:
+    # 打开服务发现
+    locator:
+      discovery:
+        enabled: true
+    base-url: http://172.17.28.71:9411/
+  # sleuth配置
+  sleuth:
+    sampler:
+      # 采样比例为100%，默认为10%
+      probability: 1.0
+# 配置hystrix防护机制
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+server:
+  port: 9999
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://blogmanager:123456@master:10237/eureka/
+
+# 暴露所有页面
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    conditions:
+      enabled: true
